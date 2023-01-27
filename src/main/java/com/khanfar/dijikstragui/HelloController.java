@@ -14,12 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -39,25 +41,43 @@ public class HelloController implements Initializable {
     @FXML
     private  AnchorPane home;
 
-    @FXML
-    private  ImageView map;
+
 
     @FXML
     private TextArea path;
 
     @FXML
     private ComboBox<String> src;
+    @FXML
+    private ScrollPane displayImage;
 
 
-public static AnchorPane home2 ;
-public static ImageView map2 ;
 
+static double imgWidth , imgHeight ;
 
+static Pane pane ;
+static ScrollPane scrollPane ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        map2 = map ;
-        home2 = home;
+        scrollPane = displayImage ;
+        Image img = null;
+
+             img = new Image("file:G:\\My Drive\\DOWNLOADS\\WGS84_Mercator_1.jpg");
+
+
+         imgWidth = img.getWidth()  ;
+        imgHeight =img.getHeight();
+
+        Canvas canvas = new Canvas(imgWidth, imgHeight);
+         pane = new Pane() ;
+        pane.setMaxHeight(imgHeight);
+        pane.setMaxWidth(imgWidth);
+        pane.getChildren().add(canvas);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.drawImage(img, 0, 0);
+        gc.setFill(Color.RED);
+
 
         for (Vertex vertex : Dijkstra.graph) {
 
@@ -65,13 +85,27 @@ public static ImageView map2 ;
             dest.getItems().addAll(vertex.getName());
 
 
+
             Button button = new Button(vertex.getName());
             button.setOnAction(e -> {
+                if (src.getValue()==null ) {
+                    src.setValue(button.getText());
+                }
+               else if (dest.getValue()==null){
+                   dest.setValue(button.getText());
+                }
+
+
+
                 System.out.println(button.getText());
 
 
             });
+
             Point2D point2D = getXY(vertex.getX() , vertex.getY());
+           // gc.fillOval(x, y, 15, 15);
+
+
             button.setLayoutX(point2D.getX());
             button.setLayoutY(point2D.getY());
             button.setStyle(
@@ -82,10 +116,11 @@ public static ImageView map2 ;
                             "-fx-max-height: 15px;" +
                             "-fx-background-color: red"
             );
-
-            home.getChildren().addAll(button);
+                 pane.getChildren().addAll(button) ;
 
         }
+
+
 
         for (Vertex v : Dijkstra.graph) {
             for (Map.Entry<String, Vertex> w : v.adjace.entrySet()) {
@@ -93,10 +128,14 @@ public static ImageView map2 ;
                 Point2D point2D = getXY(v.getX() , v.getY());
                 Point2D  point2D1 = getXY(w.getValue().getX() , w.getValue().getY());
                 Line line =new Line(point2D.getX() , point2D.getY(), point2D1.getX() , point2D1.getY());
-                home.getChildren().addAll(line);
+                pane.getChildren().addAll(line);
 
             }
         }
+        displayImage.setContent(pane);
+
+
+
 
 
 
@@ -112,7 +151,7 @@ public static ImageView map2 ;
                 @Override
                 public void run() {
                    for (Line n : list) {
-                           home2.getChildren().removeAll(n);
+                           pane.getChildren().removeAll(n);
                            n.setVisible(false);
 
                    }
@@ -135,18 +174,20 @@ public static ImageView map2 ;
                     public void run() {
                         Line line =new Line(point2D.getX() , point2D.getY(), point2D1.getX() , point2D1.getY());
                         line.setFill(Color.RED);
-                        line.setStroke(Color.BLUE);
+                        line.setStroke(Color.RED);
                         line.setStrokeWidth(10);
                         Label  label = new Label("Tareq") ;
                         label.setFont(new Font(40));
                         list.add(line);
-                        home2.getChildren().addAll(line , label);
+                        pane.getChildren().addAll(line , label);
+                        scrollPane.setContent(pane);
                     }
                 });
                 current = prev;
                 prev = current.getPV();
 
             }
+
 
 
         }
@@ -158,26 +199,43 @@ public static ImageView map2 ;
     }
 
     @FXML
-    void runOnAction(ActionEvent event) {
-        Dijkstra.dijisktra(0);
+    void runOnAction(ActionEvent event) throws IOException {
+        Dijkstra.graph.clear();
+        try {
+            Dijkstra.csvFile() ;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidFormatException e) {
+            throw new RuntimeException(e);
+        }
+
+        Dijkstra.startTable();
+        Dijkstra. adjForEachVertixs();
+
+        Dijkstra.dijisktra(indexSource);
 
         String s =  printPath(Dijkstra.graph.get(indexSource) , Dijkstra.graph.get(destSource));
         path.setText(s);
         distance.setText(Dijkstra.graph.get(destSource).getDV()+"");
 
+        src.setValue(null);
+        dest.setValue(null);
+
+
     }
 
     public static Point2D getXY(double latitude, double longitude) {
-        double mapWidth = map2.getFitWidth();
-        double mapHeight =  map2.getFitHeight();
 
      //   System.out.println(mapWidth);
      //   System.out.println(mapHeight);
 
 
 
-        double x = (longitude + 180) * ((mapWidth) / 360);
-        double y = (1 - Math.log(Math.tan(Math.toRadians(latitude)) + 1 / Math.cos(Math.toRadians(latitude))) / Math.PI) * ((mapHeight) / 2);
+        double longitudeRad = Math.toRadians(longitude);
+        double latitudeRad = Math.toRadians(latitude);
+
+        int x = (int) ((longitudeRad + Math.PI) * (imgWidth / (2 * Math.PI)));
+        int y = (int) ((Math.PI - Math.log(Math.tan(latitudeRad) + 1 / Math.cos(latitudeRad))) * (imgHeight / (2 * Math.PI)));
     //    System.out.println("[lon: " + longitude + " lat: " + latitude + "]: X: " + x + " Y: " + y);
         Point2D point2D = new Point2D(x , y) ;
         return point2D ;

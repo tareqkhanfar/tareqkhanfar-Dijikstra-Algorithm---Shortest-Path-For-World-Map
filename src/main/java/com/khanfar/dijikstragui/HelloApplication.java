@@ -22,7 +22,7 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         try {
             Dijkstra.csvFile() ;
@@ -32,8 +32,9 @@ public class HelloApplication extends Application {
             throw new RuntimeException(e);
         }
 
+       // Dijkstra.generateEdges();
         Dijkstra.startTable();
-        Dijkstra. adjForEachVertixs();
+       Dijkstra. adjForEachVertixs();
       //  dijkstra.printPath(dijkstra.graph.get(0) , dijkstra.graph.get(5));
 
 
