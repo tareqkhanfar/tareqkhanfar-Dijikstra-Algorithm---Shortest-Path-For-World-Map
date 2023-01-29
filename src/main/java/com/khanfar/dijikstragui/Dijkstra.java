@@ -20,19 +20,28 @@ public class Dijkstra {
    static  Map<VertexFromTo, Integer>distanceFromTo = new HashMap<>();
    static LinkedList <Vertex> graph = new LinkedList<>();
 
-
+static int nVertix =0;
+    static int nEdges =0 ;
     public static void csvFile () throws IOException, InvalidFormatException {
-        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("f.xlsx"));
+        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("qwe.xlsx"));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
+
+        row = sheet.getRow(0) ;
+        nVertix = (int) row.getCell(0).getNumericCellValue();
+        nEdges = (int) row.getCell(1).getNumericCellValue();
+
+
         int i = 1;
         while ((row = sheet.getRow(i)) != null) {
+            if (i == nVertix) {
+                break;
+            }
             String city = row.getCell(0).getStringCellValue();
             double x= row.getCell(1).getNumericCellValue();
             double y = row.getCell(2).getNumericCellValue();
             Vertex v = new Vertex(city , null , Integer.MAX_VALUE , false , x , y) ;
            graph.add(v) ;
-
 
             i++;
 
@@ -53,7 +62,7 @@ public class Dijkstra {
         XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("edges.xlsx"));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
-        int i = 0;
+        int i = nVertix;
         while ((row = sheet.getRow(i)) != null) {
             String city1 = row.getCell(0).getStringCellValue();
             String city2 = row.getCell(1).getStringCellValue();
@@ -89,12 +98,13 @@ public class Dijkstra {
         XSSFSheet spreadsheet = workbook.createSheet("Edges");
         XSSFRow row;
         Map<String, Object[]> edges
-                = new TreeMap<String, Object[]>();    Random r = new Random();
+                = new TreeMap<String, Object[]>();
+        Random r = new Random();
         int low = 0;
         int high = 200;
 
         int k = 1 ;
-        for (int i = 0 ; i < 50 ; i++) {
+        for (int i = 0 ; i < 16 ; i++) {
             int rand1 = (r.nextInt(high - low) + low) % graph.size();
             int rand2 = (r.nextInt(high - low) + low + 1) % graph.size();
             if (rand1 == rand2) {
@@ -106,7 +116,29 @@ public class Dijkstra {
 
         }
 
+
+
         int rowid = 0;
+        row = spreadsheet.createRow(rowid++);
+        Cell cell = row.createCell(0);
+        cell.setCellValue(graph.size());
+         cell = row.createCell(1);
+        cell.setCellValue(edges.size());
+
+        for (Vertex vertex : graph) {
+            row = spreadsheet.createRow(rowid++);
+            cell = row.createCell(0);
+            cell.setCellValue(vertex.getName());
+
+            cell = row.createCell(1);
+            cell.setCellValue(vertex.getX());
+
+            cell = row.createCell(2);
+            cell.setCellValue(vertex.getY());
+
+        }
+
+
 
         // writing the data into the sheets...
         Set<String> keyid = edges.keySet();
@@ -117,7 +149,7 @@ public class Dijkstra {
             Object[] objectArr = edges.get(key);
             int cellid = 0;
             for (Object obj : objectArr) {
-                Cell cell = row.createCell(cellid++);
+                 cell = row.createCell(cellid++);
                 cell.setCellValue((String)obj);
             }
         }

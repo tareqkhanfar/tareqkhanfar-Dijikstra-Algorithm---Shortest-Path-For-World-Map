@@ -32,10 +32,10 @@ public class HelloApplication extends Application {
             throw new RuntimeException(e);
         }
 
-       // Dijkstra.generateEdges();
+     // Dijkstra.generateEdges();
         Dijkstra.startTable();
        Dijkstra. adjForEachVertixs();
-      //  dijkstra.printPath(dijkstra.graph.get(0) , dijkstra.graph.get(5));
+        //  dijkstra.printPath(dijkstra.graph.get(0) , dijkstra.graph.get(5));
 
 
         launch();

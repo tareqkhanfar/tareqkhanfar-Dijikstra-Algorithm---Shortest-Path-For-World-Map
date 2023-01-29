@@ -161,7 +161,7 @@ static ScrollPane scrollPane ;
              Vertex prev = current.getPV() ;
 
             while (prev != null) {
-                str.append("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV());
+                str.append("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV() +"\n ##################################################\n");
 
 
                 System.out.print("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV());
