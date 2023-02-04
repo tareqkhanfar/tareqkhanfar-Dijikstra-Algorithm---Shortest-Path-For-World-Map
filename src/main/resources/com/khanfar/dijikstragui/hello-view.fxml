@@ -7,14 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1367.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.khanfar.dijikstragui.HelloController">
+<AnchorPane id="home" fx:id="home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="1367.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.khanfar.dijikstragui.HelloController">
    <children>
       <ScrollPane fx:id="displayImage" prefHeight="640.0" prefWidth="1121.0" />
-      <ComboBox fx:id="src" layoutX="1198.0" layoutY="36.0" onAction="#srcOnAction" prefHeight="35.0" prefWidth="128.0" promptText="SRC" />
-      <ComboBox fx:id="dest" layoutX="1198.0" layoutY="95.0" onAction="#destOnAction" prefHeight="35.0" prefWidth="128.0" promptText="TARGET" />
-      <Button layoutX="1204.0" layoutY="156.0" mnemonicParsing="false" onAction="#runOnAction" prefHeight="35.0" prefWidth="116.0" text="RUN" />
-      <TextArea fx:id="path" layoutX="1129.0" layoutY="225.0" prefHeight="204.0" prefWidth="213.0" promptText="PATH" />
-      <TextField fx:id="distance" layoutX="1129.0" layoutY="470.0" promptText="DISTANCE" />
+      <ComboBox fx:id="src" layoutX="1145.0" layoutY="36.0" onAction="#srcOnAction" prefHeight="35.0" prefWidth="205.0" promptText="SRC" styleClass="selects" />
+      <ComboBox fx:id="dest" layoutX="1147.0" layoutY="95.0" onAction="#destOnAction" prefHeight="35.0" prefWidth="205.0" promptText="TARGET" styleClass="selects" />
+      <Button id="run" layoutX="1144.0" layoutY="156.0" mnemonicParsing="false" onAction="#runOnAction" prefHeight="35.0" prefWidth="213.0" styleClass="selects" text="RUN" />
+      <TextArea id="t1" fx:id="path" layoutX="1129.0" layoutY="225.0" prefHeight="204.0" prefWidth="223.0" promptText="PATH" styleClass="selects" />
+      <TextField id="t2" fx:id="distance" layoutX="1129.0" layoutY="470.0" prefHeight="59.0" prefWidth="223.0" promptText="DISTANCE" styleClass="selects" />
    </children>
 </AnchorPane>

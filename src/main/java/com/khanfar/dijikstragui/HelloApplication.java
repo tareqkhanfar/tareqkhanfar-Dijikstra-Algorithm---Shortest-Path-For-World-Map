@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -16,7 +18,11 @@ public class HelloApplication extends Application {
 
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Parent parent = fxmlLoader.load();
+
+        Scene scene = new Scene(parent);
+        scene.getStylesheets().addAll(HelloApplication.class.getResource("style.css").toExternalForm());
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

@@ -11,6 +11,11 @@ import javafx.fxml.FXML;
 
 
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +29,7 @@ import javafx.scene.text.Text;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -62,12 +68,17 @@ static ScrollPane scrollPane ;
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scrollPane = displayImage ;
         Image img = null;
+        Label  label = new Label() ;
+        label.setFont(new Font(40));
 
-             img = new Image("file:G:\\My Drive\\DOWNLOADS\\WGS84_Mercator_1.jpg");
+             img = new Image("D:\\Algorithim\\Project_3_Dijikstra\\DijikstraGui\\src\\main\\resources\\com\\khanfar\\dijikstragui\\WGS84_Mercator_1.jpg");
 
 
-         imgWidth = img.getWidth()  ;
+
+        imgWidth = img.getWidth()  ;
         imgHeight =img.getHeight();
+        imgWidth = 1200 ;
+        imgHeight =700;
 
         Canvas canvas = new Canvas(imgWidth, imgHeight);
          pane = new Pane() ;
@@ -75,8 +86,9 @@ static ScrollPane scrollPane ;
         pane.setMaxWidth(imgWidth);
         pane.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(img, 0, 0);
+        gc.drawImage(img, 0, 0 , imgWidth ,imgHeight );
         gc.setFill(Color.RED);
+        pane.getChildren().add(label);
 
 
         for (Vertex vertex : Dijkstra.graph) {
@@ -96,7 +108,12 @@ static ScrollPane scrollPane ;
                 }
 
 
-
+       Platform.runLater(new Runnable() {
+           @Override
+           public void run() {
+               label.setText(button.getText());
+           }
+       });
                 System.out.println(button.getText());
 
 
@@ -109,12 +126,12 @@ static ScrollPane scrollPane ;
             button.setLayoutX(point2D.getX());
             button.setLayoutY(point2D.getY());
             button.setStyle(
-                    "-fx-background-radius: 10em; " +
-                            "-fx-min-width: 15px; " +
-                            "-fx-min-height: 15px; " +
-                            "-fx-max-width: 15px; " +
-                            "-fx-max-height: 15px;" +
-                            "-fx-background-color: red"
+                    "-fx-background-radius: 3em; " +
+                            "-fx-min-width: 5px; " +
+                            "-fx-min-height: 5px; " +
+                            "-fx-max-width: 5px; " +
+                            "-fx-max-height: 5px;" +
+                            "-fx-background-color: green"
             );
                  pane.getChildren().addAll(button) ;
 
@@ -128,6 +145,7 @@ static ScrollPane scrollPane ;
                 Point2D point2D = getXY(v.getX() , v.getY());
                 Point2D  point2D1 = getXY(w.getValue().getX() , w.getValue().getY());
                 Line line =new Line(point2D.getX() , point2D.getY(), point2D1.getX() , point2D1.getY());
+
                 pane.getChildren().addAll(line);
 
             }
@@ -146,6 +164,8 @@ static ScrollPane scrollPane ;
     public static String printPath(Vertex start, Vertex end) {
         current = null ;
         StringBuilder str= new StringBuilder();
+        Stack <String> stack = new Stack<>() ;
+
         try {
             Platform.runLater(new Runnable() {
                 @Override
@@ -159,10 +179,9 @@ static ScrollPane scrollPane ;
             });
              current = end ;
              Vertex prev = current.getPV() ;
-
             while (prev != null) {
-                str.append("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV() +"\n ##################################################\n");
-
+               // str.append("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV() +"\n ##################################################\n");
+              stack.push("Move from " + prev.getName() +" to " + current.getName() +"-- " +current.getDV() +"km");
 
                 System.out.print("   " + current.getName()  + "  And cost : " + current.getDV() + "----->" + prev.getName()  + "  And cost : " + prev.getDV());
                 Point2D point2D = getXY(current.getX() , current.getY());
@@ -175,7 +194,7 @@ static ScrollPane scrollPane ;
                         Line line =new Line(point2D.getX() , point2D.getY(), point2D1.getX() , point2D1.getY());
                         line.setFill(Color.RED);
                         line.setStroke(Color.RED);
-                        line.setStrokeWidth(10);
+                        line.setStrokeWidth(5);
                         Label  label = new Label("Tareq") ;
                         label.setFont(new Font(40));
                         list.add(line);
@@ -193,6 +212,9 @@ static ScrollPane scrollPane ;
         }
         catch (NullPointerException e ) {
             e.printStackTrace();
+        }
+        while (!stack.isEmpty()) {
+            str.append(stack.pop()+"\n");
         }
         return str.toString() ;
 

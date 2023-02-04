@@ -23,7 +23,7 @@ public class Dijkstra {
 static int nVertix =0;
     static int nEdges =0 ;
     public static void csvFile () throws IOException, InvalidFormatException {
-        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("qwe.xlsx"));
+        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("edges.xlsx"));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
 
@@ -62,7 +62,8 @@ static int nVertix =0;
         XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("edges.xlsx"));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
-        int i = nVertix;
+        int i = nVertix+2;
+        System.out.println("#######" + i);
         while ((row = sheet.getRow(i)) != null) {
             String city1 = row.getCell(0).getStringCellValue();
             String city2 = row.getCell(1).getStringCellValue();
