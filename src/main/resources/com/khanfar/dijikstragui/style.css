@@ -1,23 +1,38 @@
-#home {
+.home {
     -fx-background-color: #1e1c1c;
 }
+
+#tf {
+    -fx-control-inner-background:#464545;
+    -fx-text-fill: white;
+}
+
+.lab {    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;}
+
 .selects {
     -fx-background-color: #464545;
     -fx-text-alignment: center;
     -fx-text-fill: white;
     -fx-font-size: 16px;
+    -fx-font-weight: bold;
 }
 
-#t1 {
+.t {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+
+    -fx-text-fill: white;
     -fx-background-color: #464545;
     -fx-text-alignment: center;
 }
 
-#t2 {
-    -fx-background-color: #464545;
-    -fx-text-alignment: center;
-}
-#run {
+.run {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
     -fx-background-color: #393670;
     -fx-text-alignment: center;
 }

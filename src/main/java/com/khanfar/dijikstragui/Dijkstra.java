@@ -22,8 +22,8 @@ public class Dijkstra {
 
 static int nVertix =0;
     static int nEdges =0 ;
-    public static void csvFile () throws IOException, InvalidFormatException {
-        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("edges.xlsx"));
+    public static void csvFile (String fileName) throws IOException, InvalidFormatException {
+        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream(fileName));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
 
@@ -57,9 +57,8 @@ static int nVertix =0;
 
 
 
-    public static  void startTable () throws IOException {
-
-        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream("edges.xlsx"));
+    public static  void startTable (String fileName) throws IOException {
+        XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream(fileName));
         XSSFSheet sheet = work.getSheetAt(0);
         XSSFRow row = null ;
         int i = nVertix+2;
@@ -94,7 +93,7 @@ static int nVertix =0;
         return null ;
     }
 
-    public static void generateEdges () throws IOException {
+    public static void generateEdges (String fileName) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet("Edges");
         XSSFRow row;
@@ -105,7 +104,7 @@ static int nVertix =0;
         int high = 200;
 
         int k = 1 ;
-        for (int i = 0 ; i < 16 ; i++) {
+        for (int i = 0 ; i < 600 ; i++) {
             int rand1 = (r.nextInt(high - low) + low) % graph.size();
             int rand2 = (r.nextInt(high - low) + low + 1) % graph.size();
             if (rand1 == rand2) {
@@ -155,7 +154,7 @@ static int nVertix =0;
             }
         }
         FileOutputStream out = new FileOutputStream(
-                new File("edges.xlsx"));
+                new File(fileName));
 
         workbook.write(out);
         out.flush();

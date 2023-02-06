@@ -64,10 +64,13 @@ static double imgWidth , imgHeight ;
 static Pane pane ;
 static ScrollPane scrollPane ;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         scrollPane = displayImage ;
-        Image img = null;
+
+                Image img = null;
         Label  label = new Label() ;
         label.setFont(new Font(40));
 
@@ -126,11 +129,11 @@ static ScrollPane scrollPane ;
             button.setLayoutX(point2D.getX());
             button.setLayoutY(point2D.getY());
             button.setStyle(
-                    "-fx-background-radius: 3em; " +
-                            "-fx-min-width: 5px; " +
-                            "-fx-min-height: 5px; " +
-                            "-fx-max-width: 5px; " +
-                            "-fx-max-height: 5px;" +
+                    "-fx-background-radius: 5em; " +
+                            "-fx-min-width: 7px; " +
+                            "-fx-min-height: 7px; " +
+                            "-fx-max-width: 7px; " +
+                            "-fx-max-height: 7px;" +
                             "-fx-background-color: green"
             );
                  pane.getChildren().addAll(button) ;
@@ -224,14 +227,14 @@ static ScrollPane scrollPane ;
     void runOnAction(ActionEvent event) throws IOException {
         Dijkstra.graph.clear();
         try {
-            Dijkstra.csvFile() ;
+            Dijkstra.csvFile(startController.FILE_NAME) ;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InvalidFormatException e) {
             throw new RuntimeException(e);
         }
 
-        Dijkstra.startTable();
+        Dijkstra.startTable(startController.FILE_NAME);
         Dijkstra. adjForEachVertixs();
 
         Dijkstra.dijisktra(indexSource);
