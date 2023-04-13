@@ -1,9 +1,8 @@
 package com.khanfar.dijikstragui;
 
-
-
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -17,10 +16,10 @@ import java.util.*;
 
 public class Dijkstra {
 
-   static  Map<VertexFromTo, Integer>distanceFromTo = new HashMap<>();
+   static  Map<VertexFromTo, Integer> distanceFromTo = new HashMap<>();
    static LinkedList <Vertex> graph = new LinkedList<>();
 
-static int nVertix =0;
+    static int nVertix =0;
     static int nEdges =0 ;
     public static void csvFile (String fileName) throws IOException, InvalidFormatException {
         XSSFWorkbook work  = new XSSFWorkbook(new FileInputStream(fileName));
@@ -47,6 +46,8 @@ static int nVertix =0;
 
         }
 
+
+
     }
 
 
@@ -68,7 +69,9 @@ static int nVertix =0;
             String city2 = row.getCell(1).getStringCellValue();
              Vertex v1 = searchVertexByName(city1) ;
             Vertex v2 = searchVertexByName(city2) ;
-           v1.adjace.put(v2.getName() , v2);
+            if (v2.getName() != null) {
+                v1.adjace.put(v2.getName() , v2);
+            }
             //   graph.get(rand2).adjace.put(graph.get(rand1).getName() , graph.get(rand1));
 
             double lat1 = v1.getX();
@@ -98,13 +101,13 @@ static int nVertix =0;
         XSSFSheet spreadsheet = workbook.createSheet("Edges");
         XSSFRow row;
         Map<String, Object[]> edges
-                = new TreeMap<String, Object[]>();
+                = new HashMap<>();
         Random r = new Random();
         int low = 0;
-        int high = 200;
+        int high = graph.size();
 
         int k = 1 ;
-        for (int i = 0 ; i < 600 ; i++) {
+        for (int i = 0 ; i < graph.size() * 6 ; i++) {
             int rand1 = (r.nextInt(high - low) + low) % graph.size();
             int rand2 = (r.nextInt(high - low) + low + 1) % graph.size();
             if (rand1 == rand2) {
@@ -160,6 +163,11 @@ static int nVertix =0;
         out.flush();
         out.close();
 
+        Alert a = new Alert(Alert.AlertType.NONE);
+        a.setAlertType(Alert.AlertType.INFORMATION);
+       a.setContentText("Generated data is ok , please restart the program   ");
+        // show the dialog
+        a.show();
 
     }
     public static  void adjForEachVertixs () {

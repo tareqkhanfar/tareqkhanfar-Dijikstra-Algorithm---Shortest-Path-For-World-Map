@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -28,6 +29,11 @@ public class startController {
            FILE_NAME =  file.getAbsolutePath();
            Dijkstra.csvFile(FILE_NAME);
             Dijkstra.startTable(FILE_NAME);
+            Alert a = new Alert(Alert.AlertType.NONE);
+            a.setAlertType(Alert.AlertType.INFORMATION);
+            a.setContentText("read file is ok    ");
+            // show the dialog
+            a.show();
         }
      }
 

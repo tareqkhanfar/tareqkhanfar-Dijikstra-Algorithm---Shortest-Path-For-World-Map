@@ -29,7 +29,6 @@ public class Vertex implements Comparable<Vertex> {
         this.y = y;
     }
 
-    LinkedList <Vertex> adjacent = new LinkedList<>();
     HashMap<String , Vertex> adjace = new HashMap();
 
     private  boolean known = false;

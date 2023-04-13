@@ -1,0 +1,47 @@
+.root {
+    -fx-background-color: #f7f7f7;
+    -fx-padding: 20px;
+}
+
+.header {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.form-field {
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+.form-field > .label {
+    -fx-text-fill: #333;
+    -fx-min-width: 100px;
+}
+
+.form-field > .text-field {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10px;
+    -fx-min-width: 200px;
+}
+
+.form-field > .text-field:focused {
+    -fx-background-color: #f7f7f7;
+    -fx-border-color: #333;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}
+
+.button {
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #666666;
+    -fx-cursor: hand;
+}

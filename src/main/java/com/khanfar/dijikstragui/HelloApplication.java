@@ -34,7 +34,6 @@ public class HelloApplication extends Application {
       // Dijkstra. adjForEachVertixs();
         //  dijkstra.printPath(dijkstra.graph.get(0) , dijkstra.graph.get(5));
 
-
         launch();
     }
 

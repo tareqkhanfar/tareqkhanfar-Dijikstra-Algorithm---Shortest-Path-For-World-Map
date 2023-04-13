@@ -73,6 +73,7 @@ static ScrollPane scrollPane ;
                 Image img = null;
         Label  label = new Label() ;
         label.setFont(new Font(40));
+        label.setStyle("-fx-text-fill: #b0223b");
 
              img = new Image("D:\\Algorithim\\Project_3_Dijikstra\\DijikstraGui\\src\\main\\resources\\com\\khanfar\\dijikstragui\\WGS84_Mercator_1.jpg");
 
@@ -89,6 +90,7 @@ static ScrollPane scrollPane ;
         pane.setMaxWidth(imgWidth);
         pane.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
         gc.drawImage(img, 0, 0 , imgWidth ,imgHeight );
         gc.setFill(Color.RED);
         pane.getChildren().add(label);
@@ -141,7 +143,7 @@ static ScrollPane scrollPane ;
         }
 
 
-
+/*
         for (Vertex v : Dijkstra.graph) {
             for (Map.Entry<String, Vertex> w : v.adjace.entrySet()) {
                 System.out.println("tareq");
@@ -153,6 +155,8 @@ static ScrollPane scrollPane ;
 
             }
         }
+
+ */
         displayImage.setContent(pane);
 
 
@@ -198,10 +202,9 @@ static ScrollPane scrollPane ;
                         line.setFill(Color.RED);
                         line.setStroke(Color.RED);
                         line.setStrokeWidth(5);
-                        Label  label = new Label("Tareq") ;
-                        label.setFont(new Font(40));
+
                         list.add(line);
-                        pane.getChildren().addAll(line , label);
+                        pane.getChildren().addAll(line );
                         scrollPane.setContent(pane);
                     }
                 });
@@ -240,8 +243,15 @@ static ScrollPane scrollPane ;
         Dijkstra.dijisktra(indexSource);
 
         String s =  printPath(Dijkstra.graph.get(indexSource) , Dijkstra.graph.get(destSource));
-        path.setText(s);
-        distance.setText(Dijkstra.graph.get(destSource).getDV()+"");
+        if (Dijkstra.graph.get(destSource).getDV() == Integer.MAX_VALUE) {
+            path.setText("no path");
+            distance.setText("N/A");
+
+        }
+        else {
+            path.setText(s);
+            distance.setText(Dijkstra.graph.get(destSource).getDV() + "");
+        }
 
         src.setValue(null);
         dest.setValue(null);
@@ -251,17 +261,13 @@ static ScrollPane scrollPane ;
 
     public static Point2D getXY(double latitude, double longitude) {
 
-     //   System.out.println(mapWidth);
-     //   System.out.println(mapHeight);
-
 
 
         double longitudeRad = Math.toRadians(longitude);
         double latitudeRad = Math.toRadians(latitude);
 
         int x = (int) ((longitudeRad + Math.PI) * (imgWidth / (2 * Math.PI)));
-        int y = (int) ((Math.PI - Math.log(Math.tan(latitudeRad) + 1 / Math.cos(latitudeRad))) * (imgHeight / (2 * Math.PI)));
-    //    System.out.println("[lon: " + longitude + " lat: " + latitude + "]: X: " + x + " Y: " + y);
+        int y = (int) ((Math.PI - Math.log(Math.tan(latitudeRad) + 1 / Math.cos(latitudeRad))) * (imgHeight / ( 2*Math.PI)));
         Point2D point2D = new Point2D(x , y) ;
         return point2D ;
 
