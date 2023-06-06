@@ -19,7 +19,10 @@ Return the shortest distance to the destination node.
 The algorithm can be implemented using a priority queue to efficiently select the node with the smallest tentative distance at each iteration. Dijkstra's algorithm guarantees that the shortest path is found when all edge weights are non-negative.
 
 
-https://user-images.githubusercontent.com/98056148/232041034-ba5657d7-5b44-4611-8e8e-94c7578fa891.mp4
+
+
+https://github.com/tareqkhanfar/tareqkhanfar-Dijikstra-Algorithm---Shortest-Path-For-World-Map/assets/98056148/1e40287c-3abd-4fde-9c2f-1048a91bd668
+
 
 ![Screenshot (156)](https://user-images.githubusercontent.com/98056148/232040192-66ada86e-d227-424d-9605-3969618c1400.png)
 ![Screenshot (155)](https://user-images.githubusercontent.com/98056148/232040199-42033913-6d25-4c42-9707-ebb3ac212f29.png)
