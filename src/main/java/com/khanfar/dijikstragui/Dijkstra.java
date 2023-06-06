@@ -67,7 +67,7 @@ public class Dijkstra {
         while ((row = sheet.getRow(i)) != null) {
             String city1 = row.getCell(0).getStringCellValue();
             String city2 = row.getCell(1).getStringCellValue();
-             Vertex v1 = searchVertexByName(city1) ;
+            Vertex v1 = searchVertexByName(city1) ;
             Vertex v2 = searchVertexByName(city2) ;
             if (v2.getName() != null) {
                 v1.adjace.put(v2.getName() , v2);
